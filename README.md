@@ -64,7 +64,10 @@ Baidu Pan: [.zip file](https://pan.baidu.com/s/1tz1jaBtfSAVKZld77pAg_Q) (passwor
 2. Generate the demo predictions for the examples by running
 `python run.py predict_examples`
 
-The predictions are written to `saliency` sub-directories to the examples folders.
+`python run.py predict_examples_wk`
+
+The predictions are written to `saliency` sub-directories to the examples folders. 
+But I saved my results in `<my_bigdata_folder>/WF/Preds/<Dataset>/UNISAL/` to ease evaluation.
 
 ---
 ## Training, scoring and test set predictions

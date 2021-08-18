@@ -32,6 +32,7 @@ if "TRAIN_DIR" not in os.environ:
 if "PRED_DIR" not in os.environ:
     os.environ["PRED_DIR"] = str(parent_dir / "predictions")
 
+base_dir = '/research/dept2/qxlai/'
 
 class Trainer(utils.KwConfigClass):
     """
@@ -878,7 +879,8 @@ class Trainer(utils.KwConfigClass):
                 frame_modulo = 5 if source == 'DHF1K' else 4
                 dataset = data.FolderVideoDataset(
                     images_path, source=source, frame_modulo=frame_modulo)
-                pred_dir = folder_path / 'saliency'
+                # pred_dir = folder_path / 'saliency' # original setting: save with dataset images
+                pred_dir = Path(base_dir).joinpath('WF/Preds', folder_path.name) # save outside together
                 pred_dir.mkdir(exist_ok=True)
 
                 pred_seq = self.run_inference(
@@ -902,7 +904,8 @@ class Trainer(utils.KwConfigClass):
 
             else:
                 dataset = data.FolderImageDataset(images_path)
-                pred_dir = folder_path / 'saliency'
+                # pred_dir = folder_path / 'saliency' # original setting: save with dataset images
+                pred_dir = Path(base_dir).joinpath('WF/Preds', folder_path.name)  # save outside together
                 pred_dir.mkdir(exist_ok=True)
 
                 for img_idx in range(len(dataset)):

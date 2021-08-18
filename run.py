@@ -93,5 +93,27 @@ def predict_examples(train_id=None):
                 example_folder, is_video, train_id=train_id, source=source)
 
 
+def predict_examples_wk(train_id=None):
+    for example_folder in (Path(__file__).resolve().parent / "examples").glob("*"):
+        if not example_folder.is_dir():
+            continue
+
+        source = example_folder.name
+        is_video = source not in ('SALICON', 'MIT1003', 'PASCAL-S', 'toronto', 'DUTOMRON')
+
+        print(f"\nGenerating predictions for {'video' if is_video else 'image'} "
+              f"folder\n{str(source)}")
+
+        if is_video:
+            if not example_folder.is_dir():
+                continue
+            for video_folder in example_folder.glob('[!.]*'):   # ignore hidden files
+                predictions_from_folder(
+                    video_folder, is_video, train_id=train_id, source=source)
+
+        else:
+            predictions_from_folder(
+                example_folder, is_video, train_id=train_id, source=source)
+
 if __name__ == "__main__":
     fire.Fire()
