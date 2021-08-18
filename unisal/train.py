@@ -931,7 +931,7 @@ class Trainer(utils.KwConfigClass):
                     filename = dataset.image_files[img_idx].name
                     # filename = filename.split('.')[0]+'.png'
                     filename = '.'.join(filename.split('.')[:-1])+'.png'
-                    pdb.set_trace()
+#                     pdb.set_trace()
                     smap = (smap / np.amax(smap) * 255).astype(np.uint8)
                     pred_file = pred_dir / filename
                     cv2.imwrite(
