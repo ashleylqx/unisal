@@ -881,7 +881,7 @@ class Trainer(utils.KwConfigClass):
                 dataset = data.FolderVideoDataset(
                     images_path, source=source, frame_modulo=frame_modulo)
                 # pred_dir = folder_path / 'saliency' # original setting: save with dataset images
-                pred_dir = Path(base_dir).joinpath('WF/Preds', folder_path.name) # save outside together
+                pred_dir = Path(base_dir).joinpath('WF/Preds', folder_path.name, 'UNISAL') # save outside together
                 pred_dir.mkdir(exist_ok=True)
 
                 pred_seq = self.run_inference(
@@ -898,6 +898,9 @@ class Trainer(utils.KwConfigClass):
 
                     # Save prediction as image
                     filename = dataset.frame_files[frame_idx].name
+                    # may need to change postfix of the results
+                    # filename = filename.split('.')[0]+'.png'
+                    filename = '.'.join(filename.split('.')[:-1] + '.png')
                     smap = (smap / np.amax(smap) * 255).astype(np.uint8)
                     pred_file = pred_dir / filename
                     cv2.imwrite(
@@ -907,7 +910,7 @@ class Trainer(utils.KwConfigClass):
                 dataset = data.FolderImageDataset(images_path)
                 pdb.set_trace()
                 # pred_dir = folder_path / 'saliency' # original setting: save with dataset images
-                pred_dir = Path(base_dir).joinpath('WF/Preds', folder_path.name)  # save outside together
+                pred_dir = Path(base_dir).joinpath('WF/Preds', folder_path.name, 'UNISAL')  # save outside together
                 pred_dir.mkdir(exist_ok=True)
 
                 for img_idx in range(len(dataset)):
@@ -924,7 +927,8 @@ class Trainer(utils.KwConfigClass):
 
                     # Save prediction as image
                     filename = dataset.image_files[img_idx].name
-                    filename = filename.split('.')[0]+'.png'
+                    # filename = filename.split('.')[0]+'.png'
+                    filename = '.'.join(filename.split('.')[:-1]+'.png')
                     pdb.set_trace()
                     smap = (smap / np.amax(smap) * 255).astype(np.uint8)
                     pred_file = pred_dir / filename
