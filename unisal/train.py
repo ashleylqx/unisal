@@ -12,6 +12,7 @@ import copy
 import time
 from itertools import chain
 import math
+import pdb
 
 import torch
 import torch.nn.functional as F
@@ -904,6 +905,7 @@ class Trainer(utils.KwConfigClass):
 
             else:
                 dataset = data.FolderImageDataset(images_path)
+                pdb.set_trace()
                 # pred_dir = folder_path / 'saliency' # original setting: save with dataset images
                 pred_dir = Path(base_dir).joinpath('WF/Preds', folder_path.name)  # save outside together
                 pred_dir.mkdir(exist_ok=True)
@@ -922,6 +924,8 @@ class Trainer(utils.KwConfigClass):
 
                     # Save prediction as image
                     filename = dataset.image_files[img_idx].name
+                    filename = filename.split('.')[0]+'.png'
+                    pdb.set_trace()
                     smap = (smap / np.amax(smap) * 255).astype(np.uint8)
                     pred_file = pred_dir / filename
                     cv2.imwrite(
