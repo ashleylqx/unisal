@@ -910,7 +910,9 @@ class Trainer(utils.KwConfigClass):
                 dataset = data.FolderImageDataset(images_path)
                 pdb.set_trace()
                 # pred_dir = folder_path / 'saliency' # original setting: save with dataset images
-                pred_dir = Path(base_dir).joinpath('WF/Preds', folder_path.name, 'UNISAL')  # save outside together
+                # pred_dir = Path(base_dir).joinpath('WF/Preds', folder_path.name, 'UNISAL')  # save outside together
+                pred_ds = Path(base_dir).joinpath('WF/Preds', folder_path.name)
+                pred_dir = pred_ds / 'UNISAL'
                 pred_dir.mkdir(exist_ok=True)
 
                 for img_idx in range(len(dataset)):
