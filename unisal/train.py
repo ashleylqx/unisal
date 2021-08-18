@@ -908,11 +908,11 @@ class Trainer(utils.KwConfigClass):
 
             else:
                 dataset = data.FolderImageDataset(images_path)
-                pdb.set_trace()
+                # pdb.set_trace()
                 # pred_dir = folder_path / 'saliency' # original setting: save with dataset images
-                # pred_dir = Path(base_dir).joinpath('WF/Preds', folder_path.name, 'UNISAL')  # save outside together
-                pred_ds = Path(base_dir).joinpath('WF/Preds', folder_path.name)
-                pred_dir = pred_ds / 'UNISAL'
+                pred_dir = Path(base_dir).joinpath('WF/Preds', folder_path.name, 'UNISAL')  # save outside together
+                # pred_ds = Path(base_dir).joinpath('WF/Preds', folder_path.name)
+                # pred_dir = pred_ds / 'UNISAL'
                 pred_dir.mkdir(exist_ok=True)
 
                 for img_idx in range(len(dataset)):
@@ -930,7 +930,7 @@ class Trainer(utils.KwConfigClass):
                     # Save prediction as image
                     filename = dataset.image_files[img_idx].name
                     # filename = filename.split('.')[0]+'.png'
-                    filename = '.'.join(filename.split('.')[:-1]+'.png')
+                    filename = '.'.join(filename.split('.')[:-1])+'.png'
                     pdb.set_trace()
                     smap = (smap / np.amax(smap) * 255).astype(np.uint8)
                     pred_file = pred_dir / filename
