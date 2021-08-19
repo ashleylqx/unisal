@@ -99,7 +99,7 @@ def predict_examples_wk(train_id=None):
             continue
 
         source = example_folder.name
-        is_video = source not in ('SALICON', 'MIT1003', 'PASCAL-S', 'toronto', 'DUTOMRON')
+        is_video = source not in ('SALICON', 'MIT1003', 'PASCAL-S', 'TORONTO', 'DUTOMRON')
 
         print(f"\nGenerating predictions for {'video' if is_video else 'image'} "
               f"folder\n{str(source)}")
