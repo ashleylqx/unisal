@@ -452,11 +452,15 @@ class Trainer(utils.KwConfigClass):
             model_kwargs['source'] = self.model.sources[0]
 
         # Select static or dynamic forward pass for Bypass-RNN
+        # model_kwargs.update(
+        #     {'static': model_kwargs['source'] in ('SALICON', 'MIT300', 'MIT1003')})
         model_kwargs.update(
-            {'static': model_kwargs['source'] in ('SALICON', 'MIT300', 'MIT1003')})
+            {'static': model_kwargs['source'] in ('SALICON', 'MIT300', 'MIT1003',
+                                                  'PASCAL-S', 'TORONTO', 'DUTOMRON')})
 
         # Set additional parameters
-        static_data = source in ('SALICON', 'MIT300', 'MIT1003')
+        # static_data = source in ('SALICON', 'MIT300', 'MIT1003')
+        static_data = source in ('SALICON', 'MIT300', 'MIT1003','PASCAL-S', 'TORONTO', 'DUTOMRON')
         if static_data:
             smooth_method = None
             auc_portion = 1.
@@ -852,7 +856,8 @@ class Trainer(utils.KwConfigClass):
         if source is None:
             source = 'DHF1K' if is_video else 'SALICON'
 
-        if source in ('MIT1003', 'MIT300'):
+        # if source in ('MIT1003', 'MIT300'):
+        if source in ('MIT1003', 'MIT300', 'PASCAL-S', 'TORONTO', 'DUTOMRON'):
             try:
                 self.model.load_weights(self.train_dir, "ft_mit1003")
                 print("Fine-tuned MIT1003 weights loaded")
@@ -918,7 +923,7 @@ class Trainer(utils.KwConfigClass):
                 for img_idx in range(len(dataset)):
                     pred_seq = self.run_inference(
                         source, img_idx, dataset=dataset, phase=None,
-                        return_predictions=True, **kwargs)
+                        return_predictions=True, **kwargs) # source is set to 'SALICON' for image datasets
 
                     smap = pred_seq[:, 0, ...]
 
@@ -1019,7 +1024,8 @@ class Trainer(utils.KwConfigClass):
                 dataset_cls = getattr(data, dataset_cls_name)
                 if source in ('MIT300',):
                     config = {}
-                elif source in ('MIT1003',):
+                # elif source in ('MIT1003',):
+                elif source in ('MIT1003','PASCAL-S', 'TORONTO', 'DUTOMRON'):
                     config = getattr(self, f"salicon_cfg")
                 else:
                     config = getattr(self, f"{source.lower()}_cfg")
@@ -1043,7 +1049,8 @@ class Trainer(utils.KwConfigClass):
                     f"{source.lower()}_batch_size")
             elif phase == 'valid' and source == 'MIT1003':
                 batch_size = 8
-            elif source in ('SALICON', 'MIT1003'):
+            # elif source in ('SALICON', 'MIT1003'):
+            elif source in ('SALICON', 'MIT1003', 'PASCAL-S', 'TORONTO', 'DUTOMRON'):
                 batch_size = self.salicon_batch_size or len(dataset) //\
                     len(self.get_dataloader(phase))
                 if batch_size > 8:
