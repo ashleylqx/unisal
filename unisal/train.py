@@ -1071,7 +1071,7 @@ class Trainer(utils.KwConfigClass):
 
         im_size = input_size
         #  [batch, time, channel, h, w]
-        input = torch.randn(1, 1, 3, im_size, im_size, dtype=torch.float)
+        input = torch.randn(1, 1, 3, im_size, im_size, dtype=torch.float).to(self.device)
         flops, params = profile(self.model, inputs=(input,))
         print('For %dx%d input:' % (im_size, im_size))
         print('FLOPs = ' + str(flops / 1000 ** 3) + 'G')
