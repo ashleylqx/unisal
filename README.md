@@ -64,6 +64,7 @@ Baidu Pan: [.zip file](https://pan.baidu.com/s/1tz1jaBtfSAVKZld77pAg_Q) (passwor
 2. Generate the demo predictions for the examples by running
 `python run.py predict_examples`
 
+My own code.
 `python run.py predict_examples_wk`
 
 The predictions are written to `saliency` sub-directories to the examples folders. 
@@ -128,3 +129,6 @@ To generate predictions for the test set of each datasets follow these steps:
 
 If `--train_id` is omitted, predictions of the provided pretrained model are generated.
 
+### Calculate FLOPs
+
+Run `python run.py running_time`

@@ -1066,6 +1066,17 @@ class Trainer(utils.KwConfigClass):
             )
         return self._dataloaders[source][phase]
 
+    def get_running_time(self, input_size=224):
+        from thop import profile
+
+        im_size = input_size
+        input = torch.randn(1, 3, im_size, im_size, dtype=torch.float)
+        flops, params = profile(self.model, inputs=(input,))
+        print('For %dx%d input:' % (im_size, im_size))
+        print('FLOPs = ' + str(flops / 1000 ** 3) + 'G')
+        print('Params = ' + str(params / 1000 ** 2) + 'M')
+
+
     @property
     def model(self):
         """Set the model and move it to self.device"""

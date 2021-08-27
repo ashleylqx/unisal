@@ -115,5 +115,34 @@ def predict_examples_wk(train_id=None):
             predictions_from_folder(
                 example_folder, is_video, train_id=train_id, source=source)
 
+def predict_examples_wk(train_id=None):
+    for example_folder in (Path(__file__).resolve().parent / "examples").glob("*"):
+        if not example_folder.is_dir():
+            continue
+
+        source = example_folder.name
+        is_video = source not in ('SALICON', 'MIT1003', 'PASCAL-S', 'TORONTO', 'DUTOMRON')
+
+        print(f"\nGenerating predictions for {'video' if is_video else 'image'} "
+              f"folder\n{str(source)}")
+
+        if is_video:
+            if not example_folder.is_dir():
+                continue
+            for video_folder in example_folder.glob('[!.]*'):   # ignore hidden files
+                predictions_from_folder(
+                    video_folder, is_video, train_id=train_id, source=source)
+
+        else:
+            predictions_from_folder(
+                example_folder, is_video, train_id=train_id, source=source)
+
+
+def running_time(train_id=None):
+    trainer = load_trainer(train_id)
+    trainer.get_running_time(input_size=224)
+
+
 if __name__ == "__main__":
     fire.Fire()
+    # more brief than command parameter parser?
