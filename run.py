@@ -140,7 +140,8 @@ def predict_examples_wk(train_id=None):
 
 def running_time(train_id=None):
     trainer = load_trainer(train_id)
-    trainer.get_running_time(input_size=224)
+    # trainer.get_running_time(input_size=(224,224))
+    trainer.get_running_time()
 
 
 if __name__ == "__main__":
