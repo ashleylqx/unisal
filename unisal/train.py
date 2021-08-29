@@ -19,6 +19,7 @@ import torch.nn.functional as F
 import cv2
 from tensorboardX import SummaryWriter
 import numpy as np
+import pdb
 
 from . import salience_metrics
 from . import utils
@@ -522,6 +523,8 @@ class Trainer(utils.KwConfigClass):
             frame_seq = frame_seq.unsqueeze(0).float()
             frame_idx_array = [f_nr - 1 for f_nr in frame_nrs]
             frame_seq = frame_seq.to(self.device)
+
+            pdb.set_trace()
 
             # Run all sequences of the current offset
             h0 = [None]
